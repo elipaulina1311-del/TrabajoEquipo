@@ -1,0 +1,26 @@
+@startuml
+autonumber
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+title Caso de Uso 4: Captura de Calificaciones Semestrales
+
+actor "Profesor" as Prof
+participant "Interfaz Gráfica\n(Java Swing)" as UI
+database "Base de Datos\n(MySQL)" as DB
+
+Prof -> UI: Inicia sesión y selecciona materia a evaluar
+UI -> DB: Consulta lista de alumnos inscritos al grupo
+DB --> UI: Retorna listado de alumnos (DefaultTableModel)
+UI --> Prof: Despliega tabla dinámica con los alumnos
+Prof -> UI: Captura calificaciones en las celdas y presiona guardar
+
+alt Calificación Fuera de Rango (ej. letras o mayor al límite)
+    UI --> Prof: Interrumpe proceso, limpia celda y solicita un valor válido
+else Calificaciones Válidas
+    UI -> DB: Envía UPDATE masivo para registrar promedios en el historial de los alumnos
+    DB --> UI: Confirma actualización exitosa de la transacción
+    UI --> Prof: Muestra mensaje de confirmación de guardado
+end
+
+@enduml

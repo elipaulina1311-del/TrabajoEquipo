@@ -1,0 +1,25 @@
+@startuml Caso de Uso 6: Respaldo de Emergencia (Persistencia Híbrida)
+autonumber
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+actor "El Sistema\n(Fondo)" as System
+participant "Módulo E/S\n(Archivo Local)" as Local
+database "Base de Datos\n(MySQL)" as DB
+
+System -> DB: Intenta guardar registro (ej. inscripción)
+DB x-- System: Falla de red o servidor desconectado (SQLException)
+System -> System: Atrapa excepción de conexión
+System -> Local: Guarda datos capturados temporalmente en archivo local (.txt)
+Local --> System: Confirmación de guardado temporal
+
+loop Monitoreo de Red
+    System -> DB: Intenta reconexión periódica
+end
+
+DB --> System: Red restablecida / Servidor activo
+System -> Local: Lee archivo local temporal (.txt)
+System -> DB: Sube el registro pendiente a la base de datos
+DB --> System: Confirma inserción exitosa
+System -> Local: Elimina archivo local temporal
+@enduml
