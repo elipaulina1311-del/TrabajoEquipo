@@ -1,0 +1,24 @@
+@startuml
+autonumber
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+title Caso de Uso 3: Exportar Kardex a Documento Físico
+
+actor "Estudiante" as Student
+participant "Módulo de\nGeneración" as Gen
+database "Base de Datos\n(MySQL)" as DB
+
+Student -> Gen: Solicita impresión de Kardex
+Gen -> DB: Ejecuta consulta SQL (JOIN Persona + Calificaciones)
+DB --> Gen: Retorna historial completo de calificaciones
+
+alt Historial Vacío (Primer ingreso sin calificaciones)
+    Gen --> Student: Muestra aviso de datos insuficientes
+else Historial Encontrado
+    Gen -> Gen: Calcula promedio general acumulado
+    Gen -> Gen: Ensambla estructura del documento de salida (.rtf)
+    Gen --> Student: Guarda archivo local listo para impresión física
+end
+
+@enduml
