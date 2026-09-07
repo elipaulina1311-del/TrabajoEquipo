@@ -1,0 +1,25 @@
+@startuml
+autonumber
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+title Caso de Uso 1: Dar de alta a un nuevo perfil (Herencia)
+
+actor "Administrador" as Admin
+participant "Interfaz Gráfica\n(Java Swing)" as UI
+database "Base de Datos\n(MySQL)" as DB
+
+Admin -> UI: Abre formulario de registro
+UI --> Admin: Despliega campos (Superclase Persona + Subclase)
+Admin -> UI: Selecciona tipo de usuario y llena datos
+UI -> UI: Valida localmente e instancia objeto (POO)
+UI -> DB: Envía consulta SQL (INSERT) a tablas Padre/Hija
+alt Éxito en la Inserción
+    DB --> UI: Confirma registro guardado
+    UI --> Admin: Muestra mensaje de éxito
+else Excepción por Llave Duplicada (CURP/Matrícula)
+    DB --> UI: Retorna error de duplicidad
+    UI --> Admin: Muestra ventana emergente de error
+end
+
+@enduml
