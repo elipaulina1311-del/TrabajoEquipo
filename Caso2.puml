@@ -3,22 +3,24 @@ autonumber
 skinparam BoxPadding 10
 skinparam ParticipantPadding 10
 
-title Caso de Uso 3: Exportar Kardex a Documento Físico
+title Caso de Uso 2: Inscripción y Validación de Prerrequisitos
 
-actor "Estudiante" as Student
-participant "Módulo de\nGeneración" as Gen
+actor "Personal Admin" as Admin
+participant "Sistema de\nControl Escolar" as System
 database "Base de Datos\n(MySQL)" as DB
 
-Student -> Gen: Solicita impresión de Kardex
-Gen -> DB: Ejecuta consulta SQL (JOIN Persona + Calificaciones)
-DB --> Gen: Retorna historial completo de calificaciones
+Admin -> System: Ingresa matrícula del estudiante
+System -> DB: Consulta SELECT para recuperar objeto Estudiante
+DB --> System: Retorna datos e historial académico
+Admin -> System: Selecciona materias solicitadas para el semestre
+System -> System: Cruza materias elegidas con la tabla de prerrequisitos
 
-alt Historial Vacío (Primer ingreso sin calificaciones)
-    Gen --> Student: Muestra aviso de datos insuficientes
-else Historial Encontrado
-    Gen -> Gen: Calcula promedio general acumulado
-    Gen -> Gen: Ensambla estructura del documento de salida (.rtf)
-    Gen --> Student: Guarda archivo local listo para impresión física
+alt Prerrequisitos No Cumplidos o Estatus Pendiente
+    System --> Admin: Interrumpe proceso y bloquea inscripción
+else Prerrequisitos Validados Correctamente
+    System -> DB: Guarda nuevo registro de asignación de horario
+    DB --> System: Confirma transacción exitosa
+    System --> Admin: Muestra comprobante de inscripción
 end
 
 @enduml
