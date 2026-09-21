@@ -1,0 +1,24 @@
+@startuml
+autonumber
+skinparam BoxPadding 10
+skinparam ParticipantPadding 10
+
+title Caso de Uso 5: Trámite de Cambio de Facultad
+
+actor "Control Escolar" as Admin
+participant "Sistema de\nGestión" as System
+database "Base de Datos\n(MySQL)" as DB
+
+Admin -> System: Busca perfil del alumno y selecciona nueva facultad/carrera
+System -> DB: Consulta adeudos y estatus del estudiante
+DB --> System: Retorna estatus y registros
+
+alt Adeudos Pendientes (Biblioteca/Administrativos)
+    System --> Admin: Bloquea botón de traslado y emite advertencia
+else Alumno Regular y Sin Adeudos
+    System -> DB: Actualiza llave foránea de facultad en el registro del alumno
+    DB --> System: Confirma actualización exitosa (kardex histórico intacto)
+    System --> Admin: Muestra confirmación de cambio de plantel
+end
+
+@enduml
