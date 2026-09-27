@@ -1,0 +1,12 @@
+@startuml Diagrama de estados
+
+[*] --> REGISTRADO : Alta en sistema
+
+REGISTRADO --> INSCRITO : Validación de Prerrequisitos OK
+INSCRITO --> BLOQUEADO : Adeudo en Biblioteca / Pagos
+BLOQUEADO --> INSCRITO : Adeudo Liquidado
+INSCRITO --> EVALUADO : Fin de semestre (Notas capturadas)
+EVALUADO --> TRANSFERIDO : Cambio de Facultad
+TRANSFERIDO --> [*]
+EVALUADO --> [*] : Egresado
+@enduml

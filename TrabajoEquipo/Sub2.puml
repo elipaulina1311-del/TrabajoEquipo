@@ -1,0 +1,15 @@
+@startuml
+!theme plain
+actor "Personal Admin" as admin
+participant "Sistema de\nControl Escolar" as sistema
+database "Base de Datos\n(MySQL)" as bd
+
+admin -> sistema : 1. Selecciona materias solicitadas
+sistema -> bd : 2. Consulta tabla de prerrequisitos de las materias
+bd --> sistema : 3. Retorna reglas de seriación
+sistema -> sistema : 4. Cruza materias elegidas con el historial del alumno
+
+note over sistema : El alumno tiene estatus "Reprobado" o\n"Pendiente" en una materia base
+sistema --> admin : 5. Interrumpe proceso de asignación
+sistema --> admin : 6. Muestra alerta roja: "Inscripción bloqueada.\nPrerrequisitos no cumplidos."
+@enduml

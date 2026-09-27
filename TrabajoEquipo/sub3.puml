@@ -1,0 +1,13 @@
+@startuml
+!theme plain
+actor Estudiante as estudiante
+participant "Módulo de\nGeneración" as modulo
+database "Base de Datos\n(MySQL)" as bd
+
+estudiante -> modulo : 1. Solicita impresión de Kardex
+modulo -> bd : 2. Ejecuta consulta SQL (JOIN Persona + Calificaciones)
+bd --> modulo : 3. Retorna un conjunto de resultados vacío (NULL / 0 rows)
+
+modulo -> modulo : 4. Detecta historial vacío
+modulo --> estudiante : 5. Muestra aviso en pantalla:\n"Datos insuficientes. No cuenta con\ncalificaciones registradas para generar el Kardex."
+@enduml

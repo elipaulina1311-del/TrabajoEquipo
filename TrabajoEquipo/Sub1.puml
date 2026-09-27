@@ -1,0 +1,16 @@
+@startuml
+!theme plain
+actor Administrador as admin
+participant "Interfaz Gráfica\n(Java Swing)" as gui
+database "Base de Datos\n(MySQL)" as bd
+
+admin -> gui : 1. Selecciona tipo de usuario y llena datos
+gui -> gui : 2. Valida formatos localmente
+gui -> bd : 3. Envía consulta SQL (INSERT) a tablas Padre/Hija
+
+note right of bd : La BD detecta que la CURP o\nMatrícula ya está registrada
+bd --> gui : 4. Lanza Excepción SQL (DuplicateKeyException)
+
+gui -> gui : 5. Captura excepción y formatea error
+gui --> admin : 6. Muestra ventana emergente:\n"Error: El usuario ya existe en el sistema"
+@enduml

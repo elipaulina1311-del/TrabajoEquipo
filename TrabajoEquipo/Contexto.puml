@@ -1,0 +1,31 @@
+@startuml
+!theme plain
+left to right direction
+skinparam rectangle {
+    BackgroundColor LightBlue
+    BorderColor DarkBlue
+    BorderThickness 2
+}
+
+' Actores principales (Usuarios del sistema)
+actor "Administrador /\nControl Escolar" as admin
+actor "Estudiante" as estudiante
+actor "Profesor" as profesor
+
+' El Sistema Principal (Caja Negra)
+rectangle "==Sistema de Gestión Escolar\n(Sistema Central)" as Sistema
+
+' Sistemas Externos
+node "Sistema de Biblioteca" as biblioteca
+node "Sistema de Pagos /\nAdministrativo" as pagos
+
+' Relaciones de los actores con el sistema
+admin =right=> Sistema : "Registra perfiles, gestiona\ntraslados y valida inscripciones"
+profesor =right=> Sistema : "Consulta grupos y\ncaptura calificaciones"
+estudiante =right=> Sistema : "Solicita Kardex y\ncomprobantes de inscripción"
+
+' Relaciones del sistema con entes externos
+Sistema =up=> biblioteca : "Consulta adeudos\nde libros"
+Sistema =down=> pagos : "Verifica estatus\nfinanciero del alumno"
+
+@enduml

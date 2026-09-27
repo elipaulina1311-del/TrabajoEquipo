@@ -1,0 +1,37 @@
+@startuml Diagrama de Clases
+class Persona {
+  - curp : String
+  - nombre : String
+  - apellidoPaterno : String
+  - apellidoMaterno : String
+  - fechaNacimiento : Date
+  + getNombreCompleto() : String
+  + validarCURP() : boolean
+}
+
+class Estudiante {
+  - matricula : String
+  - estatus : String
+  - idFacultad : int
+  + inscribirMateria(materia) : boolean
+  + consultarKardex() : void
+  + verificarAdeudos() : boolean
+}
+
+class Profesor {
+  - numeroEmpleado : String
+  - especialidad : String
+  + consultarGrupo(idMateria) : List
+  + capturarNotas(idMateria, notas) : void
+}
+
+class Nota {
+  - idMateria : String
+  - calificacion : double
+  - periodo : String
+}
+
+Persona <|-- Estudiante : Herencia
+Persona <|-- Profesor : Herencia
+Estudiante "1" --> "0..*" Nota : Cursa
+@enduml

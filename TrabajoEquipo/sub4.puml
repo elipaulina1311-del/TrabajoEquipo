@@ -1,0 +1,14 @@
+@startuml
+!theme plain
+actor "Control Escolar" as admin
+participant "Sistema de\nGestión" as sistema
+database "Base de Datos\n(MySQL)" as bd
+
+admin -> sistema : 1. Busca perfil y selecciona nueva facultad
+sistema -> bd : 2. Consulta tabla de adeudos (Biblioteca / Financieros)
+bd --> sistema : 3. Retorna estatus con registros de adeudo pendientes
+
+note over sistema : Se detecta un libro no devuelto\ny un pago de inscripción pendiente
+sistema -> sistema : 4. Bloquea botón de "Confirmar Traslado"
+sistema --> admin : 5. Emite advertencia detallada:\n"Trámite denegado. El alumno presenta adeudos activos."
+@enduml

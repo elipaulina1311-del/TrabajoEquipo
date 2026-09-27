@@ -3,17 +3,17 @@ autonumber
 skinparam BoxPadding 10
 skinparam ParticipantPadding 10
 
-title Caso de Uso 1: Dar de alta a un nuevo perfil (Herencia)
+title Caso de Uso 1: Dar de alta a un nuevo perfil 
 
 actor "Administrador" as Admin
-participant "Interfaz Gráfica\n(Java Swing)" as UI
-database "Base de Datos\n(MySQL)" as DB
+participant "Interfaz Gráfica\n" as UI
+database "Base de Datos\n" as DB
 
 Admin -> UI: Abre formulario de registro
-UI --> Admin: Despliega campos (Superclase Persona + Subclase)
+UI --> Admin: Despliega campos
 Admin -> UI: Selecciona tipo de usuario y llena datos
-UI -> UI: Valida localmente e instancia objeto (POO)
-UI -> DB: Envía consulta SQL (INSERT) a tablas Padre/Hija
+UI -> UI: Valida localmente e instancia objeto
+UI -> DB: Envía consulta SQL a tablas Padre/Hija
 alt Éxito en la Inserción
     DB --> UI: Confirma registro guardado
     UI --> Admin: Muestra mensaje de éxito
