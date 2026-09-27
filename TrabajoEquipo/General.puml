@@ -1,0 +1,31 @@
+@startuml
+!theme plain
+left to right direction
+skinparam packageStyle rectangle
+
+actor Administrador as admin
+actor Profesor as profe
+actor Estudiante as est
+
+rectangle "Sistema de Control Escolar" {
+  usecase "CU1: Alta de Nuevo Perfil" as cu1
+  usecase "CU2: Inscripción y Validación" as cu2
+  usecase "CU3: Exportar Kardex (.rtf)" as cu3
+  usecase "CU4: Captura de Calificaciones" as cu4
+  usecase "CU5: Trámite de Cambio de Facultad" as cu5
+  usecase "CU6: Respaldo de Emergencia (Local)" as cu6
+}
+
+admin --> cu1
+admin --> cu2
+admin --> cu5
+
+profe --> cu4
+
+est --> cu3
+
+' Relación del sistema con el respaldo automático
+cu6 .up.> cu2 : <<extend>> (Si falla BD)
+cu6 .up.> cu4 : <<extend>> (Si falla BD)
+
+@enduml
