@@ -37,6 +37,8 @@ public class LoginController {
         return "redirect:/login";
     }
 
+
+    
     @GetMapping("/login")
     public String mostrarLogin(@RequestParam(required = false) String error,
                                @RequestParam(required = false) String logout,
