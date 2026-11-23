@@ -38,7 +38,7 @@ public class LoginController {
     }
 
 
-    
+
     @GetMapping("/login")
     public String mostrarLogin(@RequestParam(required = false) String error,
                                @RequestParam(required = false) String logout,
