@@ -1,15 +1,12 @@
 package com.control.escolar.dao;
 
+import com.control.escolar.service.PasswordUtil;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
 import javax.sql.DataSource;
-
 import org.springframework.stereotype.Repository;
-
-import com.control.escolar.service.PasswordUtil;
 
 @Repository
 public class AuthDAO {
